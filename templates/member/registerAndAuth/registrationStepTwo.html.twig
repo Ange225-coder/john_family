@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Famille Jean - ICC Deux Plateaux | Devenir membre{% endblock %}
+
+{% block body %}
+    <h1>Finaliser votre adhesion</h1>
+
+    {{ form_start(registration_step_two_form) }}
+        <div>
+            <div>
+                {{ form_label(registration_step_two_form.pseudonyme) }}<br >
+                {{ form_widget(registration_step_two_form.pseudonyme) }}
+                {{ form_errors(registration_step_two_form.pseudonyme) }}
+            </div>
+
+            <div>
+                {{ form_label(registration_step_two_form.password) }}<br >
+                {{ form_widget(registration_step_two_form.password) }}
+                {{ form_errors(registration_step_two_form.password) }}
+            </div>
+
+            <button type="submit">Devenir membre</button>
+        </div>
+    {{ form_end(registration_step_two_form) }}
+{% endblock %}

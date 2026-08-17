@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Famille Jean - ICC Deux Plateaux{% endblock %}
+
+{% block body %}
+
+    <h1>Bienvenue dans la Famille des Intimes.</h1>
+
+    {% if app.user %}
+        <div>
+            <a href="{{ path('member_logout') }}" style="color: red">Déconnexion</a>
+        </div>
+    {% else %}
+        <a href="{{ path('member_registration_step_one') }}">Devenir membre</a> <br >
+        <a href="{{ path('member_login') }}">Se connecter</a>
+    {% endif %}
+
+{% endblock %}

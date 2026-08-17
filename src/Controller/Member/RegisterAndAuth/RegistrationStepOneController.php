@@ -9,7 +9,7 @@
     use Symfony\Component\Routing\Attribute\Route;
     use Symfony\Component\HttpFoundation\Response;
 
-    class MemberRegistrationStepOneController extends AbstractController
+    class RegistrationStepOneController extends AbstractController
     {
         #[Route(path: '/registration/step-1', name: 'member_registration_step_one')]
         public function registrationStepOne(Request $request): Response
@@ -28,7 +28,7 @@
                 return $this->redirectToRoute('member_registration_step_two');
             }
 
-            return $this->render('member/registerAndAuth/memberRegistrationStepOne.html.twig', [
+            return $this->render('member/registerAndAuth/registrationStepOne.html.twig', [
                 'registration_step_one_form' => $registrationForm->createView()
             ]);
         }

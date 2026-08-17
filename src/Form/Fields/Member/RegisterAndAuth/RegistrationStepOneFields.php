@@ -2,11 +2,22 @@
 
     namespace App\Form\Fields\Member\RegisterAndAuth;
 
-    class RegistrationFields
+    use Symfony\Component\Validator\Constraints as Assert;
+
+    class RegistrationStepOneFields
     {
+        #[Assert\Regex(
+            pattern: '/^[\p{L}]{2,15}$/u',
+            message: 'Format incorrect - Votre nom doit être sous la forme Déli ou DELI - sans espace'
+        )]
         private ?string $lastName = null;
+
+        #[Assert\Regex(
+            pattern: '/^(?=.{3,30}$)[\p{L}]+(?: [\p{L}]+)*$/u',
+            message: 'Le prénom doit être compris entre 3 et 30 caractères'
+        )]
         private ?string $firstName = null;
-        private ?string $pseudonyme = null;
+
 
         // Setters and Getters
         public function setFirstName(?string $firstName): void
@@ -19,8 +30,13 @@
             $this->lastName = $lastName;
         }
 
-        public function setPseudonyme(?string $pseudonyme): void
+        public function getFirstName(): ?string
         {
-            $this->pseudonyme = $pseudonyme;
+            return $this->firstName;
+        }
+
+        public function getLastName(): ?string
+        {
+            return $this->lastName;
         }
     }
