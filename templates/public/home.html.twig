@@ -8,6 +8,7 @@
 
     {% if app.user %}
         <div>
+            <a href="{{ path('member_settings') }}">Paramètres</a>
             <a href="{{ path('member_logout') }}" style="color: red">Déconnexion</a>
         </div>
     {% else %}

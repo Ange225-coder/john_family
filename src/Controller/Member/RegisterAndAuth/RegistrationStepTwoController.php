@@ -52,6 +52,16 @@
                 $memberEntity->setPseudonyme($registrationStepTwoFields->getPseudonyme());
                 $memberEntity->setPassword($this->passwordHasher->hashPassword($memberEntity, $registrationStepTwoFields->getPassword()));
 
+                // ProfilPicture manager
+                $profilePicture = $registrationStepTwoFields->getProfilePicture();
+
+                if ($profilePicture) {
+                    $profilePictureName = uniqid().'.'.$profilePicture->guessExtension();
+                    $profilePicture->move($this->getParameter('member_profile_pictures_dir'), $profilePictureName);
+
+                    $memberEntity->setProfilePicture($profilePictureName);
+                }
+
                 $this->entityManager->persist($memberEntity);
                 $this->entityManager->flush();
 

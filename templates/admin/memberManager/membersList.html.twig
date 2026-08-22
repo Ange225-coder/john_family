@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des membres | Administration Famille Jean{% endblock %}
+
+{% block body %}
+    <h1>Liste des membres</h1>
+
+    {% for member in members %}
+        <div>
+            <p>
+                <span>{{ member.lastName }}</span><br >
+                <a href="{{ path('admin_member_details', {'pseudonyme': member.pseudonyme}) }}">Details du membre</a>
+            </p>
+
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -19,6 +19,12 @@
                 {{ form_errors(registration_step_two_form.password) }}
             </div>
 
+            <div>
+                {{ form_label(registration_step_two_form.profilePicture) }}<br >
+                {{ form_widget(registration_step_two_form.profilePicture) }}
+                {{ form_errors(registration_step_two_form.profilePicture) }}
+            </div>
+
             <button type="submit">Devenir membre</button>
         </div>
     {{ form_end(registration_step_two_form) }}

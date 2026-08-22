@@ -2,14 +2,15 @@
 
     namespace App\Entity;
 
-    use App\Repository\MemberRepository;
+    use App\Repository\AdminRepository;
     use Doctrine\ORM\Mapping as ORM;
     use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
     use Symfony\Component\Security\Core\User\UserInterface;
 
-    #[ORM\Entity(repositoryClass: MemberRepository::class)]
-    #[ORM\Table(name: '`member`')]
-    class Member implements UserInterface, PasswordAuthenticatedUserInterface
+    #[ORM\Entity(repositoryClass: AdminRepository::class)]
+    #[ORM\Table(name: '`admin`')]
+    //#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_ADMIN_NAME', fields: ['adminName'])]
+    class Admin implements UserInterface, PasswordAuthenticatedUserInterface
     {
         #[ORM\Id]
         #[ORM\GeneratedValue]
@@ -17,23 +18,19 @@
         private ?int $id = null;
 
         #[ORM\Column(length: 180, unique: true)]
-        private ?string $pseudonyme = null;
+        private ?string $adminName = null;
 
+        /**
+         * @var list<string> The user roles
+         */
         #[ORM\Column]
         private array $roles = [];
 
+        /**
+         * @var string The hashed password
+         */
         #[ORM\Column]
         private ?string $password = null;
-
-        #[ORM\Column(length: 128)]
-        private ?string $lastName = null;
-
-        #[ORM\Column(length: 128)]
-        private ?string $firstName = null;
-
-        #[ORM\Column(length: 255, nullable: true)]
-        private ?string $profilePicture = null;
-
 
 
         // Setters and Getters
@@ -42,14 +39,14 @@
             return $this->id;
         }
 
-        public function getPseudonyme(): ?string
+        public function getAdminName(): ?string
         {
-            return $this->pseudonyme;
+            return $this->adminName;
         }
 
-        public function setPseudonyme(string $pseudonyme): static
+        public function setAdminName(string $adminName): static
         {
-            $this->pseudonyme = $pseudonyme;
+            $this->adminName = $adminName;
 
             return $this;
         }
@@ -61,7 +58,7 @@
          */
         public function getUserIdentifier(): string
         {
-            return (string) $this->pseudonyme;
+            return (string) $this->adminName;
         }
 
         /**
@@ -70,8 +67,8 @@
         public function getRoles(): array
         {
             $roles = $this->roles;
-            // guarantee every user at least has ROLE_MEMBER
-            $roles[] = 'ROLE_MEMBER';
+            // guarantee every user at least has ROLE_USER
+            $roles[] = 'ROLE_ADMIN';
 
             return array_unique($roles);
         }
@@ -116,41 +113,5 @@
         public function eraseCredentials(): void
         {
             // @deprecated, to be removed when upgrading to Symfony 8
-        }
-
-        public function getLastName(): ?string
-        {
-            return $this->lastName;
-        }
-
-        public function setLastName(string $lastName): static
-        {
-            $this->lastName = $lastName;
-
-            return $this;
-        }
-
-        public function getFirstName(): ?string
-        {
-            return $this->firstName;
-        }
-
-        public function setFirstName(string $firstName): static
-        {
-            $this->firstName = $firstName;
-
-            return $this;
-        }
-
-        public function getProfilePicture(): ?string
-        {
-            return $this->profilePicture;
-        }
-
-        public function setProfilePicture(?string $profilePicture): static
-        {
-            $this->profilePicture = $profilePicture;
-
-            return $this;
         }
     }

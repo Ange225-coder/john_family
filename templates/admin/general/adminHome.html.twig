@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Famille Jean | Administration{% endblock %}
+
+{% block body %}
+    <h1>Famille jean | Administration</h1>
+
+    {% if app.user %}
+        <a href="{{ path('admin_dashboard') }}">Tableau de bord</a>
+        <a href="{{ path('admin_logout') }}" style="color: red">Déconnexion</a>
+    {% else %}
+        <a href="{{ path('admin_registration') }}">S'enregistrer</a>
+        <a href="{{ path('admin_login') }}">Se connecter</a>
+    {% endif %}
+
+{% endblock %}

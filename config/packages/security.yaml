@@ -5,17 +5,43 @@ security:
 
     # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
     providers:
-        # used to reload user from session & other features (e.g. switch_user)
+        # used to reload member from session & other features (e.g. switch_user)
         member_provider:
             entity:
                 class: App\Entity\Member
                 property: pseudonyme
+
+        # used to reload admin from session & other features (e.g. switch_user)
+        admin_provider:
+            entity:
+                class: App\Entity\Admin
+                property: adminName
 
     firewalls:
         dev:
             # Ensure dev tools and static assets are always allowed
             pattern: ^/(_profiler|_wdt|assets|build)/
             security: false
+
+        #admin firewall
+        admin:
+            pattern: ^/(admin|b_o)
+            lazy: true
+            provider: admin_provider
+            custom_authenticator: App\Security\AdminAuthenticator
+            entry_point: App\Security\AdminAuthenticator
+            logout:
+                path: admin_logout
+                # where to redirect after logout
+                target: admin_home
+
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800
+                path: /
+                # by default, the feature is enabled by checking a checkbox in the
+                # login form, uncomment the following line to always enable it.
+                #always_remember_me: true
 
         #member firewall
         member:
@@ -45,7 +71,7 @@ security:
 
     # Note: Only the *first* matching rule is applied
     access_control:
-        # - { path: ^/admin, roles: ROLE_ADMIN }
+         - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
 
 when@test:

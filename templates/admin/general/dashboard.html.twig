@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tableau de bord | Administration Famille Jean{% endblock %}
+
+{% block body %}
+    <h1>Bonjour {{ app.user.adminName }} bienvenu sur votre tableau de bord</h1>
+
+    <a href="{{ path('admin_members_list') }}">Liste des membres</a>
+{% endblock %}

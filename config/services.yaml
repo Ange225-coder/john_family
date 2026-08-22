@@ -7,6 +7,8 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    # This service allows members to put a profile picture
+    member_profile_pictures_dir: 'members/uploads/profile_pictures'
 
 services:
     # default configuration for services in *this* file
