@@ -3,6 +3,10 @@
 {% block title %}Famille Jean - ICC Deux Plateaux{% endblock %}
 
 {% block body %}
+    {# message if a last name, first name has been changed #}
+    {% for informationSavedMsg in app.flashes('information_saved') %}
+        {{ informationSavedMsg }}
+    {% endfor %}
 
     <h1>Bienvenue dans la Famille des Intimes.</h1>
 

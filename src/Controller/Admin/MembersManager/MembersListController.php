@@ -19,7 +19,10 @@
         #[IsGranted('ROLE_ADMIN')]
         public function membersList(): Response
         {
-            $members = $this->memberRepository->findAll();
+            $members = $this->memberRepository->findBy(
+                [],
+                ['id' => 'DESC']
+            );
 
             return $this->render('admin/memberManager/membersList.html.twig', [
                 'members' => $members
