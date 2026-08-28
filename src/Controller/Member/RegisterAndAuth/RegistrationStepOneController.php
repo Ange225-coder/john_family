@@ -14,6 +14,12 @@
         #[Route(path: '/registration/step-1', name: 'member_registration_step_one')]
         public function registrationStepOne(Request $request): Response
         {
+            $member = $this->getUser();
+
+            if ($member) {
+                return $this->redirectToRoute('member_space');
+            }
+
             $registrationStepOneFields = new RegistrationStepOneFields();
 
             $registrationForm = $this->createForm(RegistrationStepOneType::class, $registrationStepOneFields);

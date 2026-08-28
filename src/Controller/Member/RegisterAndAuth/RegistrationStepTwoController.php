@@ -73,7 +73,7 @@
                     $session->remove('last_name');
                     $session->remove('first_name');
 
-                    return $response ?? $this->redirectToRoute('home');
+                    return $response ?? $this->redirectToRoute('member_space');
                 }
                 catch (AuthenticationException $e) {
                     $this->addFlash('authentication_error', 'Votre compte a été créé, mais la connexion automatique a échoué. Veuillez vous connecter.');

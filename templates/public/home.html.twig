@@ -2,22 +2,195 @@
 
 {% block title %}Famille Jean - ICC Deux Plateaux{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('style/css-prefixed/public/home.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+{% endblock %}
+
 {% block body %}
     {# message if a last name, first name has been changed #}
     {% for informationSavedMsg in app.flashes('information_saved') %}
         {{ informationSavedMsg }}
     {% endfor %}
 
-    <h1>Bienvenue dans la Famille des Intimes.</h1>
 
-    {% if app.user %}
-        <div>
-            <a href="{{ path('member_settings') }}">Paramètres</a>
-            <a href="{{ path('member_logout') }}" style="color: red">Déconnexion</a>
+
+    <header>
+        <nav>
+            <div class="logo">
+                <svg viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+                    <path d="M22 14c-5-6-14-4-14 3 0 9 14 13 14 13s14-4 14-13c0-7-9-9-14-3z" fill="none" stroke="#A8235A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M22 30 C22 42, 12 42, 8 48 C4 54, 30 54, 42 48 C54 42, 60 30, 74 32" fill="none" stroke="#A8235A" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+
+                <span>Famille Jean</span>
+            </div>
+
+            <div class="nav-links">
+                <a href="{{ path('member_registration_step_one') }}" class="cta">Devenir membre</a>
+                <a href="{{ path('member_login') }}">Se connecter</a>
+            </div>
+        </nav>
+    </header>
+
+
+    <section class="banner">
+        <div class="banner-label">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+            </svg>
+
+            <span>impact centre chrétien - deux plateaux</span>
         </div>
-    {% else %}
-        <a href="{{ path('member_registration_step_one') }}">Devenir membre</a> <br >
-        <a href="{{ path('member_login') }}">Se connecter</a>
-    {% endif %}
 
+        <h1>
+            Bienvenu dans la <em>Famille Jean</em>
+        </h1>
+
+        <p class="text">
+            Inspirée de l'apôtre bien-aimé, notre famille rassemble des cœurs unis dans la foi, l'amitié et le service. Ce site recense chaque membre pour que personne ne soit jamais un inconnu parmi nous.
+        </p>
+
+        <div class="banner__links">
+            <a href="{{ path('member_registration_step_one') }}" class="btn-primary">Devenir membre</a>
+            <a href="{{ path('member_login') }}" class="btn-secondary">Se connecter</a>
+        </div>
+
+        <div class="banner-details">
+            <div>
+                <div class="banner-details__first">1 Jean</div>
+                <div class="banner-details__second">L'apôtre de l'amour</div>
+            </div>
+
+            <div>
+                <div class="banner-details__first">∞</div>
+                <div class="banner-details__second">Liens fraternels</div>
+            </div>
+
+            <div>
+                <div class="banner-details__first">1</div>
+                <div class="banner-details__second">Seule et même famille</div>
+            </div>
+        </div>
+
+        <div class="constellation-wrapper">
+            <svg viewBox="0 0 640 220" width="100%" height="auto" aria-hidden="true">
+                <g stroke="#D9A9BB" stroke-width="1" opacity="0.55">
+                    <line x1="320" y1="110" x2="120" y2="60"/>
+                    <line x1="320" y1="110" x2="200" y2="170"/>
+                    <line x1="320" y1="110" x2="90" y2="150"/>
+                    <line x1="320" y1="110" x2="470" y2="55"/>
+                    <line x1="320" y1="110" x2="540" y2="120"/>
+                    <line x1="320" y1="110" x2="430" y2="175"/>
+                    <line x1="120" y1="60" x2="90" y2="150"/>
+                    <line x1="470" y1="55" x2="540" y2="120"/>
+                    <line x1="200" y1="170" x2="430" y2="175"/>
+                </g>
+                <g>
+                    <circle cx="320" cy="110" r="9" fill="#A8235A"/>
+                    <circle cx="120" cy="60" r="5" fill="#D94574"/>
+                    <circle cx="200" cy="170" r="5" fill="#D94574"/>
+                    <circle cx="90" cy="150" r="4" fill="#C9A15A"/>
+                    <circle cx="470" cy="55" r="5" fill="#D94574"/>
+                    <circle cx="540" cy="120" r="4" fill="#C9A15A"/>
+                    <circle cx="430" cy="175" r="5" fill="#D94574"/>
+                </g>
+            </svg>
+        </div>
+    </section>
+
+
+    <section class="family-details">
+
+        <div class="verse-container">
+            <div class="quote-mark">&ldquo;</div>
+
+            <p class="verse">
+                Bien-aimés, aimons-nous les uns les autres ; car l'amour est de Dieu.
+            </p>
+
+            <p class="verse-ref">1 Jean 4:7</p>
+        </div>
+
+
+        <div class="unit">
+            <div class="unit-label">
+                <span>Ce qui nous unit</span>
+
+                <h2>Une famille, trois raisons d'être</h2>
+
+                <p>Comme l'apôtre Jean qui témoignait de l'amour fraternel, notre famille se construit sur trois piliers simples.</p>
+            </div>
+
+            <div class="pillars-container">
+                <div class="pillar">
+                    <div class="icon-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </div>
+
+                    <h2>Com Frat</h2>
+
+                    <p>
+                        Des rencontres régulières qui tissent des liens sincères entre chaque membre.
+                    </p>
+                </div>
+
+
+                <div class="pillar">
+                    <div class="icon-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 2 2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+
+                    <h2>Enseignement</h2>
+
+                    <p>Grandir ensemble dans la foi, à l'image du témoignage d'amour transmis par l'apôtre Jean.</p>
+                </div>
+
+
+                <div class="pillar">
+                    <div class="icon-wrapper">
+                        <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                        </svg>
+                    </div>
+
+                    <h2>Entraide</h2>
+
+                    <p>Se soutenir dans les épreuves comme dans les joies, en gardant le contact avec chaque membre.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="cta-section">
+        <div class="cta-section__content">
+            <div class="cta-content">
+                <h2>Faites partie du recensement de la famille</h2>
+
+                <p>Inscrivez-vous en quelques instants pour rejoindre officiellement la Famille Jean et rester connecté à vos frères et sœurs.</p>
+
+                <div class="cta-links">
+                    <a href="{{ path('member_registration_step_one') }}" class="btn-primary">Devenir membre</a>
+                    <a href="{{ path('member_login') }}" class="btn-secondary">J'ai déja un compte</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Famille Jean</p>
+        <p>Impact Centre Chrétien — Deux Plateaux, Abidjan</p>
+    </footer>
 {% endblock %}
