@@ -34,6 +34,9 @@
         #[ORM\Column(length: 255, nullable: true)]
         private ?string $profilePicture = null;
 
+        #[ORM\Column]
+        private ?\DateTimeImmutable $createdAt = null;
+
 
 
         // Setters and Getters
@@ -150,6 +153,18 @@
         public function setProfilePicture(?string $profilePicture): static
         {
             $this->profilePicture = $profilePicture;
+
+            return $this;
+        }
+
+        public function getCreatedAt(): ?\DateTimeImmutable
+        {
+            return $this->createdAt;
+        }
+
+        public function setCreatedAt(\DateTimeImmutable $createdAt): static
+        {
+            $this->createdAt = $createdAt;
 
             return $this;
         }

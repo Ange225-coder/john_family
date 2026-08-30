@@ -51,6 +51,7 @@
                 $memberEntity->setLastName($lastName);
                 $memberEntity->setPseudonyme($registrationStepTwoFields->getPseudonyme());
                 $memberEntity->setPassword($this->passwordHasher->hashPassword($memberEntity, $registrationStepTwoFields->getPassword()));
+                $memberEntity->setCreatedAt(new \DateTimeImmutable());
 
                 // ProfilPicture manager
                 $profilePicture = $registrationStepTwoFields->getProfilePicture();

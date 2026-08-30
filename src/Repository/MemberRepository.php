@@ -33,6 +33,21 @@ class MemberRepository extends ServiceEntityRepository implements PasswordUpgrad
         $this->getEntityManager()->flush();
     }
 
+    public function findMembersRegisteredThisMonth(): array
+    {
+        $startOfMonth = new \DateTime('first day of this month 00:00:00');
+        $endOfMonth   = new \DateTime('last day of this month 23:59:59');
+
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.createdAt >= :start')
+            ->andWhere('m.createdAt <= :end')
+            ->setParameter('start', $startOfMonth)
+            ->setParameter('end', $endOfMonth)
+            ->orderBy('m.createdAt', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
     //    /**
     //     * @return Member[] Returns an array of Member objects
     //     */
