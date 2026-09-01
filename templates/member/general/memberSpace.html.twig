@@ -32,8 +32,8 @@
                     <span>Déconnexion</span>
                 </a>
 
-                <div>
-                    {{ app.user.pseudonyme|first|upper }}
+                <div class="letter-pseudo">
+                  {{ app.user.pseudonyme|first|upper }}
                 </div>
             </div>
         </nav>
@@ -41,16 +41,17 @@
 
 
     <section class="welcome">
-        <div>
-            <span>Espace membre</span>
+        <div class="text">
+            <span class="eyebrow">Espace membre</span>
 
-            <h1>Bienvenue dans ton espace, <span>{{ app.user.pseudonyme }}</span></h1>
+            <h1>Bienvenue dans ton espace, <br >
+                <span>{{ app.user.pseudonyme }}</span></h1>
 
             <p>Voici l'essentiel de la vie de la Famille Jean</p>
         </div>
 
-        <div>
-            <div>
+        <div class="avatar">
+            <div class="pseudo">
                 {{ app.user.pseudonyme|first|upper }}
             </div>
 
