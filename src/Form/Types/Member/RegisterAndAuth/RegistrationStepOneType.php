@@ -14,11 +14,17 @@
         {
             $builder
                 ->add('lastName', TextType::class, [
-                    'label' => 'Nom'
+                    'label' => 'Nom',
+                    'attr' => [
+                        'placeholder' => 'Ex. : Kouassi'
+                    ]
                 ])
 
                 ->add('firstName', TextType::class, [
-                    'label' => 'Prénoms'
+                    'label' => 'Prénoms',
+                    'attr' => [
+                        'placeholder' => 'Ex. : Marie Emmanuella'
+                    ]
                 ])
             ;
         }

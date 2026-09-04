@@ -16,16 +16,25 @@
         {
             $builder
                 ->add('pseudonyme', TextType::class, [
-                    'label' => 'Pseudonyme'
+                    'label' => 'Pseudonyme',
+                    'attr' => [
+                        'placeholder' => 'Ex. : emma_225'
+                    ]
                 ])
 
                 ->add('password', PasswordType::class, [
-                    'label' => 'Mot de passe'
+                    'label' => 'Mot de passe',
+                    'attr' => [
+                        'placeholder' => 'Ex. : 4 caractères minimum'
+                    ]
                 ])
 
                 ->add('profilePicture', FileType::class, [
                     'label' => 'Photo de profil',
-                    'required' => false
+                    'required' => false,
+                    'attr' => [
+                        'accept' => '.png, .jpg, .jpeg, .webp'
+                    ]
                 ])
             ;
         }
