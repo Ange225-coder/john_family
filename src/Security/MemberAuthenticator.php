@@ -41,11 +41,11 @@
             ]);
 
             if (!$member) {
-                throw new CustomUserMessageAuthenticationException('Votre pseudonyme ou votre mot de passe est incorrect. Vérifiez vos informations');
+                throw new CustomUserMessageAuthenticationException('Votre pseudonyme ou votre mot de passe est incorrect. Vérifiez vos informations.');
             }
 
             if (!$this->passwordHasher->isPasswordValid($member, $password)) {
-                throw new  CustomUserMessageAuthenticationException('Votre mot de passe est incorrect. Vérifiez vos informations');
+                throw new  CustomUserMessageAuthenticationException('Votre pseudonyme ou votre mot de passe est incorrect. Vérifiez vos informations.');
             }
 
             $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $pseudonyme);

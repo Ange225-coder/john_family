@@ -9,6 +9,11 @@
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 {% endblock %}
 
+{% block javascripts %}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('js/member/general/emptyLinkManager.js') }}" defer></script>
+{% endblock %}
+
 {% block body %}
     <header>
         <nav>
@@ -143,7 +148,7 @@
 
                 <p class="card-details">Mets à jour tes informations personnelles et ta photo</p>
 
-                <a href="#">
+                <a href="{{ path('member_settings') }}">
                     <span>Modifier</span>
 
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="16" height="16">
@@ -165,7 +170,7 @@
 
                 <p class="card-details">Retrouve et recontact les membres de la famille</p>
 
-                <a href="#">
+                <a href="#" class="empty-link">
                     <span>Parcourir</span>
 
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="16" height="16">
@@ -186,7 +191,7 @@
 
                 <p class="card-details">Consulte les prochaines rencontres et confirme ta presence</p>
 
-                <a href="#">
+                <a href="#" class="empty-link">
                     <span>Voir l'agenda</span>
 
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" width="16" height="16">

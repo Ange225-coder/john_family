@@ -2,40 +2,116 @@
 
 {% block title %}Famille Jean - ICC Deux Plateaux | Se connecter{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('style/css-prefixed/member/registerAndAuth/login.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/member/registerAndAuth/registrationStepTwoPasswordShowManager.js') }}" defer></script>
+{% endblock %}
+
 {% block body %}
     {# message is authentication is failed #}
     {% for authenticationFailedMsg in app.flashes('authentication_error') %}
         {{ authenticationFailedMsg }}
     {% endfor %}
 
-    <form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
 
-{#    {% if app.user %}#}
-{#        <div class="mb-3">#}
-{#            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ logout_path() }}">Logout</a>#}
-{#        </div>#}
-{#    {% endif %}#}
+    <section class="brand-panel">
+        <div class="content brand-logo">
+            <svg viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22 14c-5-6-14-4-14 3 0 9 14 13 14 13s14-4 14-13c0-7-9-9-14-3z" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M22 30 C22 42, 12 42, 8 48 C4 54, 30 54, 42 48 C54 42, 60 30, 74 32" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+            </svg>
 
-    <h1 class="h3 mb-3 font-weight-normal">Se connecter</h1>
-    <label for="inputPseudonyme">Pseudonyme</label>
-    <input type="text" value="{{ last_username }}" name="pseudonyme" id="inputPseudonyme" class="form-control" autocomplete="username" required autofocus>
+            <span>Famille Jean</span>
+        </div>
 
-    <label for="inputPassword">Mot de passe</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+        <div class="brand-quote">
+            <p>&laquo; Bien-aimés, aimons-nous les uns les autres ; car l'amour est de Dieu. &raquo;</p>
+            <div class="ref">1 Jean 4:7</div>
+        </div>
 
-    <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+        <div class="brand-foot">Impact Centre Chrétien &mdash; Deux Plateaux, Abidjan</div>
+    </section>
 
-    <div class="checkbox mb-3">
-        <label>
-            <input type="checkbox" name="_remember_me"> Se souvenir de moi
-        </label>
-    </div>
+    <section class="form-container">
+        <div class="form-content">
+            <span class="eyebrow --middle">Espace membre</span>
+            <h1 class="--middle">Content de te revoir</h1>
+            <p class="subtitle --middle">Connecte-toi pour retrouver ta famille et rester à jour avec la vie de la communauté.</p>
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
+            <form method="post">
+                {% if error %}
+                    <div class="error">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M12 8v4M12 16h.01"/>
+                        </svg>
+
+                        <div class="text">
+                            <strong>Connexion impossible</strong>
+                            <span>{{ error.messageKey|trans(error.messageData, 'security') }}</span>
+                        </div>
+
+                    </div>
+                {% endif %}
+
+{#                <div class="error">#}
+{#                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke-width="2">#}
+{#                        <circle cx="12" cy="12" r="10"/>#}
+{#                        <path d="M12 8v4M12 16h.01"/>#}
+{#                    </svg>#}
+
+{#                    <div class="text">#}
+{#                        <strong>Connexion impossible</strong>#}
+{#                        <span>Votre pseudonyme ou votre mot de passe est incorrect. Vérifiez vos informations.</span>#}
+{#                    </div>#}
+{#                </div>#}
+
+
+                <div class="field">
+                    <label for="inputPseudonyme">Pseudonyme</label>
+                    <input type="text" value="{{ app.request.get('pseudonyme') }}" name="pseudonyme" id="inputPseudonyme" autocomplete="username" required autofocus placeholder="Ex. : emma225">
+                </div>
+
+                <div class="field">
+                    <label for="inputPassword">Mot de passe</label>
+
+                    <div class="field-password-wrapper">
+                        <input type="password" value="{{ app.request.get('password') }}" name="password" id="inputPassword" autocomplete="current-password" required placeholder="Tom mot de passe">
+
+                        <button type="button" class="btn-toggle-password js-toggle-password" aria-label="Afficher le mot de passe" aria-pressed="false">
+                            <svg class="js-eye-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+
+                <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+
+                <label class="remember-me">
+                    <input type="checkbox" name="_remember_me">
+                    <span>Se souvenir de moi</span>
+                </label>
+
+                <button class="submit-btn" type="submit">
+                    Se connecter
+
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <path d="M5 12h14M13 6l6 6-6 6"/>
+                    </svg>
+                </button>
+            </form>
+
+            <div class="section-footer">Pas encore membre ? <a href="{{ path('member_registration_step_one') }}">Rejoindre la famille</a></div>
+        </div>
+    </section>
+
 {% endblock %}
