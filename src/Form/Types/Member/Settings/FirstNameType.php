@@ -14,14 +14,17 @@
         {
             $builder
                 ->add('currentFirstName', TextType::class, [
-                    'label' => 'Votre prénom actuel',
+                    'label' => 'Prénom actuel',
                     'attr' => [
-                        'readonly' => true
+                        'readonly' => true,
                     ]
                 ])
 
                 ->add('newFirstName', TextType::class, [
-                    'label' => 'Entrez un nouveau prénom'
+                    'label' => 'Nouveau prénom',
+                    'attr' => [
+                        'placeholder' => 'Entrez un nouveau prénom'
+                    ]
                 ])
             ;
         }

@@ -2,69 +2,283 @@
 
 {% block title %}Famille Jean - ICC Deux Plateaux | Paramètres{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('style/css-prefixed/member/settings/memberSettings.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/member/settings/profilePictureManager.js') }}" defer></script>
+{% endblock %}
+
 {% block body %}
-    <h1>Paramètres</h1>
+    <header>
+        <nav>
+            <div class="logo">
+                <svg viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg" width="16" height="16">
+                    <path d="M22 14c-5-6-14-4-14 3 0 9 14 13 14 13s14-4 14-13c0-7-9-9-14-3z" fill="none" stroke="#A8235A" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M22 30 C22 42, 12 42, 8 48 C4 54, 30 54, 42 48 C54 42, 60 30, 74 32" fill="none" stroke="#A8235A" stroke-width="3" stroke-linecap="round"/>
+                </svg>
 
-    <div>
-        <h2>Modifier votre nom</h2>
-
-        {{ form_start(last_name_form) }}
-            <div>
-                {{ form_label(last_name_form.currentLastName) }}<br >
-                {{ form_widget(last_name_form.currentLastName) }}
-                {{ form_errors(last_name_form.currentLastName) }}
+                <span>Famille Jean</span>
             </div>
 
-            <div>
-                {{ form_label(last_name_form.newLastName) }}<br >
-                {{ form_widget(last_name_form.newLastName) }}
-                {{ form_errors(last_name_form.newLastName) }}
-            </div>
+            <div class="nav-right">
+                <a href="{{ path('member_logout') }}">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                        <path d="M16 17l5-5-5-5"/>
+                        <path d="M21 12H9"/>
+                    </svg>
 
-            <button type="submit">Modifier votre nom</button>
-        {{ form_end(last_name_form) }}
+                    <span>Déconnexion</span>
+                </a>
+
+                <div class="letter-pseudo">
+                    {{ app.user.pseudonyme|first|upper }}
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+    <div class="main-content-head">
+        <span class="eyebrow">Espace membre</span>
+
+        <h1>Paramètres du compte</h1>
+
+        <p>Gère tes informations personnelles, ton pseudonyme, ton mot de passe et ta photo de profil.</p>
     </div>
 
 
-    <div>
-        <h2>Modifier votre prénom</h2>
+    <section class="main-content-wrapper">
 
-        {{ form_start(first_name_form) }}
-            <div>
-                {{ form_label(first_name_form.currentFirstName) }}<br >
-                {{ form_widget(first_name_form.currentFirstName) }}
-                {{ form_errors(first_name_form.currentFirstName) }}
+        <div class="profil-pic-wrapper card">
+            <div class="profil-pic-wrapper__header">
+{#                <div class="avatar">#}
+{#                    {% if app.user.profilePicture is not null %}#}
+{#                        <img src="{{ asset('members/uploads/profile_pictures/' ~ app.user.profilePicture) }}" width="200" alt="famille_jean_icc_deux_plateau_avatar">#}
+{#                    {% else %}#}
+{#                        {{ app.user.pseudonyme|first }}#}
+{#                    {% endif %}#}
+{#                </div>#}
+
+                <div class="avatar">
+                    {# Image dynamique pour la prévisualisation #}
+                    <img id="avatar-preview"
+                         src="{{ app.user.profilePicture ? asset('members/uploads/profile_pictures/' ~ app.user.profilePicture) : '' }}"
+                         alt="Avatar"
+                         style="{{ app.user.profilePicture ? '' : 'display: none;' }}">
+
+                    {# Fallback initial (première lettre) #}
+                    <span id="avatar-fallback" style="{{ app.user.profilePicture ? 'display: none;' : '' }}">
+                        {{ app.user.pseudonyme|first }}
+                    </span>
+                </div>
+
+                <div class="info">
+                    <h3>Photo de profil</h3>
+
+                    <p id="default-info">
+                        PNG, JPG, JPEG, WEBP, 2 Mo maximum.<br >
+                        Visible dans l'annuaire de la famille.
+                    </p>
+
+                    {# Zone d'informations du nouveau fichier #}
+                    <p id="file-info" class="file-details" style="display: none;">
+                        <strong id="file-name"></strong><br>
+                        <span id="file-size"></span>
+                    </p>
+                </div>
             </div>
 
-            <div>
-                {{ form_label(first_name_form.newFirstName) }}<br >
-                {{ form_widget(first_name_form.newFirstName) }}
-                {{ form_errors(first_name_form.newFirstName) }}
+            {{ form_start(profile_picture_form) }}
+                <button type="button" class="upload-btn">
+                    <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                        <path d="M17 8l-5-5-5 5"/>
+                        <path d="M12 3v12"/>
+                    </svg>
+
+                    Changer la photo
+                </button>
+
+                {# Bouton pour annuler la sélection #}
+                <button type="button" id="remove-btn" class="remove-btn" style="display: none;">
+                    Retirer la photo
+                </button>
+
+                <button type="submit" class="submit-btn">
+                    Modifier la photo
+
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <path d="M20 6 9 17l-5-5"/>
+                    </svg>
+                </button>
+            {{ form_end(profile_picture_form) }}
+        </div>
+
+
+        {# last name manager #}
+        <div class="card">
+            <div class="card-head">
+                <div class="icon-wrapper">
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                        <circle cx="12" cy="7" r="4"/>
+                    </svg>
+                </div>
+
+                <div class="description">
+                    <h2>Nom de famille</h2>
+                    <p>Tel qu'il apparaîtra dans le registre de la famille</p>
+                </div>
             </div>
 
-            <button type="submit">Modifier votre prénom</button>
-        {{ form_end(first_name_form) }}
-    </div>
+            {# message if last name has been updated successfully #}
+            {% for lastNameUpdatedMsg in app.flashes('last_name_updated_successfully') %}
+                <div class="card-success">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                        <path d="M20 6 9 17l-5-5"/>
+                    </svg>
+
+                    <span>{{ lastNameUpdatedMsg }}</span>
+                </div>
+            {% endfor %}
+
+            {{ form_start(last_name_form) }}
+                <div class="field-wrapper">
+                    <div class="field">
+                        {{ form_label(last_name_form.currentLastName) }}
+                        {{ form_widget(last_name_form.currentLastName) }}
+                        {{ form_errors(last_name_form.currentLastName) }}
+                    </div>
+
+                    <div class="field">
+                        {{ form_label(last_name_form.newLastName) }}
+                        {{ form_widget(last_name_form.newLastName, {'attr': {'class': '--input-background'}}) }}
+                        {{ form_errors(last_name_form.newLastName) }}
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    Modifier le nom
+
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <path d="M20 6 9 17l-5-5"/>
+                    </svg>
+                </button>
+
+            {{ form_end(last_name_form) }}
+        </div>
 
 
-    <div>
-        <h2>Modifier votre pseudonyme</h2>
+        {# first name manager #}
+        <div class="card">
 
-        {{ form_start(pseudonyme_form) }}
-            <div>
-                {{ form_label(pseudonyme_form.currentPseudonyme) }}<br >
-                {{ form_widget(pseudonyme_form.currentPseudonyme) }}
-                {{ form_errors(pseudonyme_form.currentPseudonyme) }}
+            <div class="card-head">
+                <div class="icon-wrapper">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                    </svg>
+                </div>
+
+                <div class="description">
+                    <h2>Prénom</h2>
+                    <p>Ton prénom usuel au sein de la famille</p>
+                </div>
             </div>
 
-            <div>
-                {{ form_label(pseudonyme_form.newPseudonyme) }}<br >
-                {{ form_widget(pseudonyme_form.newPseudonyme) }}
-                {{ form_errors(pseudonyme_form.newPseudonyme) }}
+            {# message if first name has been updated successfully #}
+            {% for firstNameUpdatedMsg in app.flashes('first_name_updated_successfully') %}
+                <div class="card-success">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                        <path d="M20 6 9 17l-5-5"/>
+                    </svg>
+
+                    <span>{{ firstNameUpdatedMsg }}</span>
+                </div>
+            {% endfor %}
+
+            {{ form_start(first_name_form) }}
+                <div class="field-wrapper">
+                    <div class="field">
+                        {{ form_label(first_name_form.currentFirstName) }}
+                        {{ form_widget(first_name_form.currentFirstName) }}
+                        {{ form_errors(first_name_form.currentFirstName) }}
+                    </div>
+
+                    <div class="field">
+                        {{ form_label(first_name_form.newFirstName) }}
+                        {{ form_widget(first_name_form.newFirstName, {'attr': {'class': '--input-background'}}) }}
+                        {{ form_errors(first_name_form.newFirstName) }}
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    Modifier le prénom
+
+                    <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <path d="M20 6 9 17l-5-5"/>
+                    </svg>
+                </button>
+            {{ form_end(first_name_form) }}
+        </div>
+
+
+        {# pseudonyme manager #}
+        <div class="card">
+            <div class="card-head">
+                <div class="icon-wrapper">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+                    </svg>
+                </div>
+
+                <div class="description">
+                    <h2>Pseudonyme</h2>
+                    <p>Utilisé pour te connecter à ton espace membre</p>
+                </div>
             </div>
 
-            <button type="submit">Modifier votre pseudonyme</button>
-        {{ form_end(pseudonyme_form) }}
-    </div>
+            {# message if pseudo has been updated successfully #}
+            {% for pseudoUpdatedMsg in app.flashes('pseudo_updated_successfully') %}
+                <div class="card-success">
+                    <svg viewBox="0 0 24 24" fill="none" stroke-width="2">
+                        <path d="M20 6 9 17l-5-5"/>
+                    </svg>
+
+                    <span>{{ pseudoUpdatedMsg }}</span>
+                </div>
+            {% endfor %}
+
+            {{ form_start(pseudonyme_form) }}
+                <div class="field-wrapper">
+                    <div class="field">
+                        {{ form_label(pseudonyme_form.currentPseudonyme) }}
+                        {{ form_widget(pseudonyme_form.currentPseudonyme) }}
+                        {{ form_errors(pseudonyme_form.currentPseudonyme) }}
+                    </div>
+
+                    <div class="field">
+                        {{ form_label(pseudonyme_form.newPseudonyme) }}
+                        {{ form_widget(pseudonyme_form.newPseudonyme, {'attr': {'class': '--input-background'}}) }}
+                        {{ form_errors(pseudonyme_form.newPseudonyme) }}
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        Modifier le pseudonyme
+
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2">
+                            <path d="M20 6 9 17l-5-5"/>
+                        </svg>
+                    </button>
+                </div>
+            {{ form_end(pseudonyme_form) }}
+        </div>
+    </section>
 
 {% endblock %}

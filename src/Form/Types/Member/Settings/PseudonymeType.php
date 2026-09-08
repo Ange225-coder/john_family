@@ -14,14 +14,17 @@
         {
             $builder
                 ->add('currentPseudonyme', TextType::class, [
-                    'label' => 'Votre pseudonyme actuel',
+                    'label' => 'Pseudonyme actuel',
                     'attr' => [
-                        'readonly' => true
+                        'readonly' => true,
                     ]
                 ])
 
                 ->add('newPseudonyme', TextType::class, [
-                    'label' => 'Entrez votre nouveau pseudonyme'
+                    'label' => 'Nouveau pseudonyme',
+                    'attr' => [
+                        'placeholder' => 'Entrez un nouveau pseudonyme'
+                    ]
                 ])
             ;
         }
