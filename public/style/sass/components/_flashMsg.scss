@@ -1,0 +1,23 @@
+.flashMsg {
+    position: fixed;
+    bottom: 30px;
+    left: 10px;
+    color: #fff;
+    padding: 20px 18px;
+    border-radius: 4px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+    z-index: 1000;
+
+    &--success {
+        background: #198754;
+    }
+
+    &--warning {
+        background-color: #ffc107;
+        color: #000;
+    }
+
+    &--error {
+        background-color: #dc3545;
+    }
+}

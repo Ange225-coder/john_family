@@ -1,26 +1,92 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Créer un compte{% endblock %}
+{% block title %}Créer un compte administrateur | Famille Jean{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('style/css-prefixed/admin/registerAndAuth/adminRegistration.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=Work+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('js/member/showHidePasswordManager/showHidePasswordManager.js') }}" defer></script>
+{% endblock %}
 
 {% block body %}
-    <h1>Créer un compte administrateur</h1>
 
-    {{ form_start(admin_registration_form) }}
-        <div>
+    <header>
+        <nav>
 
-            <div>
-                {{ form_label(admin_registration_form.adminName) }}<br >
-                {{ form_widget(admin_registration_form.adminName) }}
-                {{ form_errors(admin_registration_form.adminName) }}
+            <div class="nav-logo">
+                <svg viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22 14c-5-6-14-4-14 3 0 9 14 13 14 13s14-4 14-13c0-7-9-9-14-3z" fill="none" stroke="#D94574" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M22 30 C22 42, 12 42, 8 48 C4 54, 30 54, 42 48 C54 42, 60 30, 74 32" fill="none" stroke="#D94574" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+
+                <div class="logo-text">
+                    <span>Famille Jean</span>
+                    <span>Administration</span>
+                </div>
             </div>
 
-            <div>
-                {{ form_label(admin_registration_form.password) }}<br >
-                {{ form_widget(admin_registration_form.password) }}
-                {{ form_errors(admin_registration_form.password) }}
+            <a href="#" class="nav-back" onclick="history.back();">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+
+                Retour
+            </a>
+        </nav>
+    </header>
+
+
+    <main>
+        <div class="main-content">
+
+            <div class="badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2 3 7v6c0 5.5 3.8 9.7 9 11 5.2-1.3 9-5.5 9-11V7l-9-5z"/>
+                </svg>
+
+                Accès administrateur
             </div>
 
-            <button type="submit">S'enregistrer</button>
+            <h1 class="main-title">Créer un compte administrateur</h1>
+
+            <p class="subtitle">Ce compte donnera un accès complet à la gestion du registre et des membres de la famille.</p>
+
+            {{ form_start(admin_registration_form) }}
+
+                <div class="field">
+                    {{ form_label(admin_registration_form.adminName) }}
+                    {{ form_widget(admin_registration_form.adminName) }}
+                    {{ form_errors(admin_registration_form.adminName) }}
+                </div>
+
+                <div class="field">
+                    {{ form_label(admin_registration_form.password) }}
+
+                    <div class="field-password-wrapper">
+                        {{ form_widget(admin_registration_form.password) }}
+
+                        <button type="button" class="btn-toggle-password js-toggle-password" aria-label="Afficher le mot de passe" aria-pressed="false">
+                            <svg class="js-eye-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    {{ form_errors(admin_registration_form.password) }}
+                </div>
+
+                <button type="submit" class="submit-btn">S'enregistrer</button>
+
+            {{ form_end(admin_registration_form) }}
+
+            <div class="foot-link">Déjà administrateur ? <a href="{{ path('admin_login') }}">Se connecter</a></div>
         </div>
-    {{ form_end(admin_registration_form) }}
+    </main>
+
 {% endblock %}

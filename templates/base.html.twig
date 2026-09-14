@@ -5,12 +5,15 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="{{ asset('img/logo/family_john_logo.jpg') }}">
+        <link rel="stylesheet" href="{{ asset('style/css/base/general-spinner.css') }}">
         {% block stylesheets %}
         {% endblock %}
 
         {% block javascripts %}
 {#            {% block importmap %}{{ importmap('app') }}{% endblock %}#}
         {% endblock %}
+        <script src="{{ asset('js/base/general-spinner.js') }}"></script>
+
 
         {% set frankenphp_hot_reload = app.request.server.get('FRANKENPHP_HOT_RELOAD') %}
         {% if frankenphp_hot_reload %}
@@ -20,6 +23,10 @@
         {% endif %}
     </head>
     <body>
+        <div id="page-spinner">
+            <div class="spinner"></div>
+        </div>
+
         {% block body %}{% endblock %}
     </body>
 </html>

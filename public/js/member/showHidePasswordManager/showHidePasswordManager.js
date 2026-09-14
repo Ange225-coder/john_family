@@ -1,3 +1,7 @@
+/**
+ * This file is used into two other twig files
+ */
+
 document.addEventListener('DOMContentLoaded', () => {
     const toggleBtn = document.querySelector('.js-toggle-password');
     if (!toggleBtn) return;

@@ -2,15 +2,97 @@
 
 {% block title %}Famille Jean | Administration{% endblock %}
 
-{% block body %}
-    <h1>Famille jean | Administration</h1>
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('style/css-prefixed/admin/general/adminHome.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=Work+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+{% endblock %}
 
-    {% if app.user %}
-        <a href="{{ path('admin_dashboard') }}">Tableau de bord</a>
-        <a href="{{ path('admin_logout') }}" style="color: red">Déconnexion</a>
-    {% else %}
-        <a href="{{ path('admin_registration') }}">S'enregistrer</a>
-        <a href="{{ path('admin_login') }}">Se connecter</a>
-    {% endif %}
+{% block body %}
+
+    <header>
+        <nav>
+            <div class="nav-logo">
+                <svg viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M22 14c-5-6-14-4-14 3 0 9 14 13 14 13s14-4 14-13c0-7-9-9-14-3z" fill="none" stroke="#D94574" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M22 30 C22 42, 12 42, 8 48 C4 54, 30 54, 42 48 C54 42, 60 30, 74 32" fill="none" stroke="#D94574" stroke-width="3" stroke-linecap="round"/>
+                </svg>
+
+                <div class="logo-text">
+                    <span>Famille Jean</span>
+                    <span>Administration</span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+    <main>
+        <div class="main-content">
+            <div class="badge">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2 3 7v6c0 5.5 3.8 9.7 9 11 5.2-1.3 9-5.5 9-11V7l-9-5z"/>
+                </svg>
+
+                Accès réservé aux administrateurs
+            </div>
+
+            <h1 class="main-title">
+                Le tableau de bord de la <em>Famille Jean</em>
+            </h1>
+
+            <p class="description">Gère le registre des membres, supervise les inscriptions et veille sur la vie de la communauté depuis un seul espace.</p>
+
+
+            <div class="links">
+                <a href="{{ path('admin_login') }}" class="btn btn-login">
+                    Se connecter
+
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <path d="M5 12h14M13 6l6 6-6 6"/>
+                    </svg>
+                </a>
+
+                <a href="{{ path('admin_registration') }}" class="btn btn-registry">
+                    S'enregistrer
+
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+                        <circle cx="9" cy="7" r="4"/>
+                        <path d="M19 8v6M22 11h-6"/>
+                    </svg>
+                </a>
+            </div>
+
+            <div class="divider-row">
+                <div class="line"></div>
+                <span>Impact Centre Chrétien</span>
+                <div class="line"></div>
+            </div>
+
+            <div class="meta-grid">
+                <div class="meta-item">
+                    <div class="k mono">RÉSEAU</div>
+                    <div class="v serif">Deux Plateaux</div>
+                </div>
+
+                <div class="meta-item">
+                    <div class="k mono">FAMILLE</div>
+                    <div class="v serif">1 Jean</div>
+                </div>
+
+                <div class="meta-item">
+                    <div class="k mono">RÔLE</div>
+                    <div class="v serif">Administrateur</div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer>
+        Famille Jean &mdash; Portail d'administration &middot; <span>Impact Centre Chrétien, Abidjan</span>
+    </footer>
 
 {% endblock %}

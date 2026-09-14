@@ -1,4 +1,5 @@
 @use "../../utils/_mixins";
+@use "../../components/flashMsg";
 
 :root{
     --magenta-900:#4A0F29;
@@ -119,12 +120,29 @@ header {
 
     .eyebrow {
         font-size: 12.5px;
-        letter-spacing: .14em;
+        letter-spacing: .12em;
         text-transform: uppercase;
         color: var(--gold);
         font-weight: 600;
-        display: block;
+        display: flex;
+        align-items: center;
+        gap: 4px;
         margin-bottom: 10px;
+        text-decoration: none;
+        opacity: .7;
+        transition: opacity .30s;
+
+        &:hover {
+            opacity: 1;
+
+            svg {
+                transform: translateX(-3.5px);
+            }
+        }
+
+        svg {
+            transition: transform .30s;
+        }
     }
 
     h1 {
@@ -183,11 +201,11 @@ label[for="profile_picture_profilePicture"],
         }
 
         &__header {
+            //border: 1px solid blue;
             display: flex;
             align-items: center;
             gap: 26px;
-            flex-wrap: wrap;
-
+            //flex-wrap: wrap;
 
             .avatar {
                 width: 88px;
@@ -231,6 +249,10 @@ label[for="profile_picture_profilePicture"],
                 p {
                     font-size: 13px;
                     color: #8A5C6C;
+
+                    @include mixins.mobile {
+                        font-size: 12.5px;
+                    }
                 }
             }
         }
@@ -340,6 +362,11 @@ label[for="profile_picture_profilePicture"],
             grid-template-columns:1fr 1fr;
             gap: 20px;
 
+            @include mixins.tablet {
+                grid-template-columns: 1fr;
+                row-gap: 0;
+            }
+
             .field {
                 margin-bottom: 20px;
 
@@ -371,6 +398,40 @@ label[for="profile_picture_profilePicture"],
                             border-radius: 50%;
                             margin-right: 10px;
                             font-size: 0.9em;      // Ajuste la taille du "!" à l'intérieur
+                        }
+                    }
+                }
+
+                .field-password-wrapper {
+                    //border: 1px solid red;
+                    position: relative;
+                    display: flex;
+                    align-items: center;
+
+                    //input {
+                    //
+                    //}
+
+                    button {
+                        position: absolute;
+                        right: 10px;
+                        top: 28%;
+                        background: none;
+                        border: none;
+                        cursor: pointer;
+                        color: #A8235A;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        opacity: 0.7;
+                        transition: opacity .2s ease;
+
+                        &:hover {
+                            opacity: 1;
+                        }
+
+                        svg {
+                            pointer-events: none;
                         }
                     }
                 }

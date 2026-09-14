@@ -1,30 +1,29 @@
 <?php
 
-    namespace App\Form\Types\Admin\RegisterAndAuth;
+    namespace App\Form\Types\Member\Settings;
 
-    use App\Form\Fields\Admin\RegisterAndAuth\RegistrationFields;
+    use App\Form\Fields\Member\Settings\SettingPasswordFields;
     use Symfony\Component\Form\AbstractType;
     use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-    use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\Form\FormBuilderInterface;
     use Symfony\Component\OptionsResolver\OptionsResolver;
 
-    class RegistrationType extends AbstractType
+    class SettingPasswordType extends AbstractType
     {
         public function buildForm(FormBuilderInterface $builder, array $options): void
         {
             $builder
-                ->add('adminName', TextType::class, [
-                    'label' => 'Nom d\'administrateur',
+                ->add('currentPassword', PasswordType::class, [
+                    'label' => 'Mot de passe actuel',
                     'attr' => [
-                        'placeholder' => 'Ex. : admin.jean'
+                        'placeholder' => 'Ton mot de passe actuel'
                     ]
                 ])
 
-                ->add('password', PasswordType::class, [
-                    'label' => 'Mot de passe',
+                ->add('newPassword', PasswordType::class, [
+                    'label' => 'Nouveau mot de passe',
                     'attr' => [
-                        'placeholder' => '4 caractères minimum'
+                        'placeholder' => '8 caractères minimum'
                     ]
                 ])
             ;
@@ -34,7 +33,7 @@
         public function configureOptions(OptionsResolver $resolver): void
         {
             $resolver->setDefaults([
-                'data_class' => RegistrationFields::class
+                'data_class' => SettingPasswordFields::class
             ]);
         }
     }
