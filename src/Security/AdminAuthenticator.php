@@ -45,7 +45,7 @@
             }
 
             if (!$this->passwordHasher->isPasswordValid($admin, $password)) {
-                throw new CustomUserMessageAuthenticationException('Mot de passe incorrect');
+                throw new CustomUserMessageAuthenticationException('Les données saisies sont incorrect. Vérifier vos informations');
             }
 
             $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $adminName);
