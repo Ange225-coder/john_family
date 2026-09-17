@@ -2,6 +2,7 @@
 
     namespace App\Controller\Member\RegisterAndAuth;
 
+    use App\Entity\Activity;
     use App\Entity\Member;
     use App\Form\Fields\Member\RegisterAndAuth\RegistrationStepTwoFields;
     use App\Form\Types\Member\RegisterAndAuth\RegistrationStepTwoType;
@@ -63,7 +64,17 @@
                     $memberEntity->setProfilePicture($profilePictureName);
                 }
 
+                /**
+                 * Create a log activity for the registration action
+                 */
+                $activity = new Activity();
+                $activity->setType('USER_REGISTERED');
+                $activity->setTitle($lastName.' '.$firstName);
+                $activity->setCreatedAt(new \DateTimeImmutable());
+
                 $this->entityManager->persist($memberEntity);
+                $this->entityManager->persist($activity);
+
                 $this->entityManager->flush();
 
                 // Authenticate member

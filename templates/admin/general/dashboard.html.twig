@@ -89,8 +89,18 @@
 
             <div class="topbar">
                 <div class="greeting">
-                    Bonjour <strong>{{ app.user.adminName }}</strong> - heureux de te revoir
+                    Bonjour <strong>{{ app.user.adminName }}</strong> - <span>heureux de te revoir</span>
                 </div>
+
+                <a href="{{ path('admin_logout') }}" class="logout-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                        <path d="M16 17l5-5-5-5"/>
+                        <path d="M21 12H9"/>
+                    </svg>
+
+                    <span>Déconnexion</span>
+                </a>
             </div>
 
             <div class="section-content">
@@ -210,7 +220,35 @@
                     <div class="panel-card">
                         <h2>Activité récente</h2>
 
+                        {% for activity in recents_activities %}
+                            <div class="activity-list">
+                                <div class="activity-item">
 
+                                    <div class="dot-wrap">
+                                        <div class="a-dot"></div>
+                                        <div class="a-line"></div>
+                                    </div>
+
+                                    {# Gestion du libellé selon le type #}
+                                    <div class="a-text">
+                                        <p>
+                                            {% if activity.type == 'USER_REGISTERED' %}
+                                                <strong>{{ activity.title }}</strong> a rejoint la famille
+                                            {% elseif activity.type == 'EVENT_CREATED' %}
+                                                Évènement <strong>« {{ activity.title }} »</strong> créé
+                                            {% else %}
+                                                {{ activity.title }}
+                                            {% endif %}
+                                        </p>
+
+                                        {# Affichage de la date formatée #}
+                                        <span>{{ activity.createdAt|activity_date }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% else %}
+                            <p>Aucune activité récente.</p>
+                        {% endfor %}
                     </div>
                 </div>
             </div>

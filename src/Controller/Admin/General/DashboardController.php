@@ -2,6 +2,7 @@
 
     namespace App\Controller\Admin\General;
 
+    use App\Repository\ActivityRepository;
     use App\Repository\MemberRepository;
     use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
     use Symfony\Component\HttpFoundation\Response;
@@ -11,7 +12,8 @@
     class DashboardController extends AbstractController
     {
         public function __construct(
-            private readonly MemberRepository $memberRepository
+            private readonly MemberRepository $memberRepository,
+            private readonly ActivityRepository $activityRepository
         ){}
 
 
@@ -24,9 +26,18 @@
             // Filter members registered this month
             $membersOfThisMonth = $this->memberRepository->findMembersRegisteredThisMonth();
 
+            // Recents activities
+            $recentActivities = $this->activityRepository->findBy(
+                [],
+                ['createdAt' => 'DESC'],
+                4
+            );
+
+
             return $this->render('admin/general/dashboard.html.twig', [
                 'all_members' => $allMembers,
                 'members_of_this_month_counter' => count($membersOfThisMonth),
+                'recents_activities' => $recentActivities
             ]);
         }
     }
