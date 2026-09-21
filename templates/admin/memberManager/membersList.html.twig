@@ -2,56 +2,223 @@
 
 {% block title %}Liste des membres | Administration Famille Jean{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('style/css-prefixed/admin/memberManager/membersList.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=Work+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+{% endblock %}
+
 {% block javascripts %}
     <script src="{{ asset('js/admin/membersManager/memberDetailsManager.js') }}" defer></script>
 {% endblock %}
 
 {% block body %}
-    <h1>Liste des membres</h1>
+<main>
+    <aside class="sidebar">
 
-    {% for member in members %}
-        <div>
-            <p>
-                <span>{{ member.lastName }}</span><br >
+        <div class="sidebar-logo">
+            <svg viewBox="0 0 100 60" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22 14c-5-6-14-4-14 3 0 9 14 13 14 13s14-4 14-13c0-7-9-9-14-3z" fill="none" stroke="#D94574" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M22 30 C22 42, 12 42, 8 48 C4 54, 30 54, 42 48 C54 42, 60 30, 74 32" fill="none" stroke="#D94574" stroke-width="3" stroke-linecap="round"/>
+            </svg>
 
-                <a href="" class="member_details_link"
-                   data-profile-pic="{% if member.profilePicture %}{{ asset('members/uploads/profile_pictures/' ~ member.profilePicture) }}{% endif %}"
-                   data-pseudonyme="{{ member.pseudonyme }}"
-                >
-                    Details du membre
-                </a>
-            </p>
-
+            <div class="sidebar-logo__text">
+                <span>Famille Jean</span>
+                <span>Administration</span>
+            </div>
         </div>
-    {% endfor %}
+
+        <div class="sidebar-label">Vue d'ensemble</div>
+
+        <a href="{{ path('admin_dashboard') }}" class="sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1.5"/>
+                <rect x="14" y="3" width="7" height="5" rx="1.5"/>
+                <rect x="14" y="12" width="7" height="9" rx="1.5"/>
+                <rect x="3" y="16" width="7" height="5" rx="1.5"/>
+            </svg>
+
+            Tableau de bord
+        </a>
+
+        <div class="sidebar-label">Gestion</div>
+
+        <a href="{{ path('admin_members_list') }}" class="sidebar-link active">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+
+            Membres
+            <span class="badge-count">{{ members|length }}</span>
+        </a>
+
+        <a href="#" class="sidebar-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="3"/>
+                <path d="M16 2v4M8 2v4M3 10h18"/>
+            </svg>
+
+            Évènements
+            <span class="badge-count">0</span>
+        </a>
 
 
-    <div id="modal-backdrop"></div>
-    <div id="modal-container" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: white; padding: 20px; border: 1px solid black; z-index: 2;">
-        <div id="modal-profile-picture"></div>
+        <div class="sidebar-bottom">
 
-        <h1 id="modal-member-pseudo"></h1>
+            <div class="sidebar-user">
+                <div class="avatar">{{ app.user.adminName|first|upper }}</div>
+
+                <div class="who">
+                    <strong>{{ app.user.adminName }}</strong>
+                    <span>Administrateur</span>
+                </div>
+            </div>
+
+            <a href="{{ path('admin_logout') }}" class="sidebar-logout">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                    <path d="M16 17l5-5-5-5"/>
+                    <path d="M21 12H9"/>
+                </svg>
+
+                Déconnexion
+            </a>
+        </div>
+    </aside>
+
+    <section>
+        <div class="topbar">
+            <div class="greeting">
+                Bonjour <strong>{{ app.user.adminName }}</strong> - <span>heureux de te revoir</span>
+            </div>
+
+            <a href="{{ path('admin_logout') }}" class="logout-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+                    <path d="M16 17l5-5-5-5"/>
+                    <path d="M21 12H9"/>
+                </svg>
+
+                <span>Déconnexion</span>
+            </a>
+        </div>
+
+        <div class="section-content">
+
+            <div class="page-title">
+                <span>Gestion</span>
+
+                <h1>Liste des membres</h1>
+            </div>
+
+            <div class="members-list-grid">
+                {% for member in members %}
+
+                    <div class="member-card">
+
+                        <div class="avatar">
+                            {% if member.profilePicture %}
+                                <img src="{{ asset('members/uploads/profile_pictures/' ~ member.profilePicture) }}" alt="famille_jean_icc_2plateaux_avatar" width="200">
+                            {% else %}
+                                <span>{{ member.lastName|first|upper }}</span>
+                            {% endif %}
+                        </div>
+
+                        <div class="member-info">
+                            <h3>{{ member.lastName }}</h3>
+                            <span>{{ member.pseudonyme }}</span>
+                        </div>
+
+
+                        <a href="" class="member_details_link"
+                           data-profile-pic="{% if member.profilePicture %}{{ asset('members/uploads/profile_pictures/' ~ member.profilePicture) }}{% endif %}"
+                           data-pseudonyme="{{ member.pseudonyme }}"
+                           data-lastname="{{ member.lastName }}"
+                           data-firstname="{{ member.firstName }}"
+                           data-created-at="{{ member.createdAt ? member.createdAt|date('F Y') : 'Janvier 2024' }}"
+                        >
+                            <svg viewBox="0 0 24 24"  width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="12" cy="12" r="10"/>
+                                <path d="M12 16v-4M12 8h.01"/>
+                            </svg>
+                        </a>
+
+                    </div>
+
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</main>
+
+<div id="modal-backdrop"></div>
+<div id="modal-container">
+
+    <button class="modal-close" id="modalClose">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.3">
+            <path d="M18 6 6 18M6 6l12 12"/>
+        </svg>
+    </button>
+
+    <div class="modal-photo" id="modalPhoto"></div>
+
+    <h2 class="modal-title" id="modalName"></h2>
+    <div class="modal-sub" id="modalPseudo"></div>
+
+    <div class="modal-details">
+
+        <div class="detail-row">
+            <div class="k">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                    <circle cx="12" cy="7" r="4"/>
+                </svg>
+
+                Nom
+            </div>
+
+            <div class="v" id="modalNom">-</div>
+        </div>
+
+
+        <div class="detail-row">
+            <div class="k">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 1 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+                Prénom
+            </div>
+
+            <div class="v" id="modalPrenom">-</div>
+        </div>
+
+
+        <div class="detail-row">
+            <div class="k">
+                <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="4" width="18" height="18" rx="3"/>
+                    <path d="M16 2v4M8 2v4M3 10h18"/>
+                </svg>
+                Membre depuis
+            </div>
+
+            <div class="v" id="modalDate">-</div>
+        </div>
     </div>
+
+
+    <button class="btn-remove">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2m3 0v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6h14z"/>
+        </svg>
+
+        Retirer le membre
+    </button>
+
+
+</div>
 {% endblock %}
 
-{% block stylesheets %}
-    <style>
-        #modal-backdrop {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 1;
-            backdrop-filter: blur(3px);
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.25s ease;
-        }
-        #modal-backdrop.active {
-            opacity: 1;
-            visibility: visible;
-        }
-    </style>
-{% endblock %}
+

@@ -17,7 +17,7 @@
                 ->add('adminName', TextType::class, [
                     'label' => 'Nom d\'administrateur',
                     'attr' => [
-                        'placeholder' => 'Ex. : admin.jean'
+                        'placeholder' => 'Ex. : alfred'
                     ]
                 ])
 

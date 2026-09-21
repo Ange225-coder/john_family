@@ -247,7 +247,19 @@
                                 </div>
                             </div>
                         {% else %}
-                            <p>Aucune activité récente.</p>
+                            <div class="activity-empty">
+
+                                <div class="icon-wrapper">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                                        <circle cx="12" cy="12" r="9"/>
+                                        <path d="M12 7v5l3 3"/>
+                                    </svg>
+                                </div>
+
+                                <p>Aucune activité récente</p>
+
+                                <span>Les différentes actions des membres apparaîtront ici au fur et à mesure.</span>
+                            </div>
                         {% endfor %}
                     </div>
                 </div>
